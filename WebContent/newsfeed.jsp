@@ -6,7 +6,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<jsp:include page="bootstrap.jsp"></jsp:include>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Newsfeed</title>
 </head>
@@ -21,7 +20,11 @@
     <c:forEach var="f" items="${feed}">
     <c:if test="${f.post.bhpost==null}">
     	<tr><td><img src="${f.gravatar}"></td>
-        <td><c:out value="${f.post.bhuser.username}"/></td>
+        <td><c:out value="${f.post.bhuser.username}"/>
+        <form action="Follow" method="get">
+            <input type="submit" value="Follow" id="submit"/>
+            <input type="hidden" value="${f.post.bhuser.useremail}" name="follow" id="follow"/>
+        </form></td>
         <td><c:out value="${f.post.posttext}"/></td>
         <td>
         <c:if test="${f.post.mood > 0}">:D</c:if>
@@ -48,8 +51,8 @@
                     <label for="post">Comment on this post (141 char):</label>
                     <textarea name= "posttext" id="posttext" class="form-control" rows="2" placeholder= "Comment on this post" maxlength="141"></textarea>
                     <div id="textarea_feedback"></div>
-                    </div> 
-                    <div class = "form-group"> 
+                    </div>
+                    <div class = "form-group">
                     <input type="submit" value="Submit" id="submit"/>
                     <input type="reset" value="Clear"/>
                     <input type="hidden" name="parent" id="parent" value="${f.post.postid}"/>

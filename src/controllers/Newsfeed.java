@@ -33,6 +33,7 @@ public class Newsfeed extends HttpServlet {
 			f.setPost(p);
 			feed.add(f);
 		}
+		
 		request.setAttribute("feed", feed);
 		request.getRequestDispatcher("/newsfeed.jsp").forward(request,response);
 	}

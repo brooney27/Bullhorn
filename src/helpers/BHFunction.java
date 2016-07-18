@@ -3,29 +3,11 @@ package helpers;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
-
 import customTools.DBUtil;
 import model.Bhpost;
 import model.Bhuser;
 
 public class BHFunction {
-	public static Bhuser getUserByEmail(String email){
-		EntityManager em = DBUtil.getEmFactory().createEntityManager();
-		String qString = "Select u from Bhuser u where u.useremail="
-				+ ":useremail";
-		TypedQuery<Bhuser> q = em.createQuery(qString, Bhuser.class);
-		q.setParameter("useremail",email);
-		Bhuser user = null;
-		try{
-			user = q.getSingleResult();
-		}catch(NoResultException e){
-			System.out.println(e);
-		}finally{
-			em.close();
-		}
-		
-		return user;
-	}
 	public static Bhpost getPostById(String id){
 		EntityManager em = DBUtil.getEmFactory().createEntityManager();
 		String qString = "Select u from Bhpost u where u.postid="

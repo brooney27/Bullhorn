@@ -17,7 +17,7 @@ public class Bhpost implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="BHPOST_POSTID_GENERATOR", sequenceName="BHPOST_SEQ", allocationSize=1)
+	@SequenceGenerator(name="BHPOST_POSTID_GENERATOR", sequenceName="BHPOST_SEQ")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="BHPOST_POSTID_GENERATOR")
 	private long postid;
 
@@ -28,11 +28,6 @@ public class Bhpost implements Serializable {
 
 	private String posttext;
 
-	//bi-directional many-to-one association to Bhuser
-	@ManyToOne
-	@JoinColumn(name="BHUSERID")
-	private Bhuser bhuser;
-
 	//bi-directional many-to-one association to Bhpost
 	@ManyToOne
 	@JoinColumn(name="PARENTPOSTID")
@@ -41,6 +36,11 @@ public class Bhpost implements Serializable {
 	//bi-directional many-to-one association to Bhpost
 	@OneToMany(mappedBy="bhpost")
 	private List<Bhpost> bhposts;
+
+	//bi-directional many-to-one association to Bhuser
+	@ManyToOne
+	@JoinColumn(name="BHUSERID")
+	private Bhuser bhuser;
 
 	public Bhpost() {
 	}
@@ -77,14 +77,6 @@ public class Bhpost implements Serializable {
 		this.posttext = posttext;
 	}
 
-	public Bhuser getBhuser() {
-		return this.bhuser;
-	}
-
-	public void setBhuser(Bhuser bhuser) {
-		this.bhuser = bhuser;
-	}
-
 	public Bhpost getBhpost() {
 		return this.bhpost;
 	}
@@ -111,7 +103,16 @@ public class Bhpost implements Serializable {
 	public Bhpost removeBhpost(Bhpost bhpost) {
 		getBhposts().remove(bhpost);
 		bhpost.setBhpost(null);
+
 		return bhpost;
+	}
+
+	public Bhuser getBhuser() {
+		return this.bhuser;
+	}
+
+	public void setBhuser(Bhuser bhuser) {
+		this.bhuser = bhuser;
 	}
 
 }

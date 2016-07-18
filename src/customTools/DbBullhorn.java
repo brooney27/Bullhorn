@@ -116,6 +116,26 @@ public class DbBullhorn {
             }
         return userposts;    
     }
+    
+    public static Bhuser getUserByEmail(String email)
+    {
+        EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        Bhuser userposts = null;
+        String qString = "select b from Bhuser b where b.useremail = :email";
+        
+        try{
+            TypedQuery<Bhuser> query = em.createQuery(qString,Bhuser.class);
+            query.setParameter("email", email);
+            userposts = query.getSingleResult();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        finally{
+                em.close();
+            }
+        return userposts;    
+    }
+    
     public static List<Bhpost> postsofUser(String useremail)
     {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();

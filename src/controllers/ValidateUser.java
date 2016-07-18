@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import customTools.DbBullhorn;
 import helpers.BHFunction;
 import model.Bhpost;
 import model.Bhuser;
@@ -23,7 +24,7 @@ public class ValidateUser extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Bhuser user = BHFunction.getUserByEmail(request.getParameter("email"));
+		Bhuser user = DbBullhorn.getUserByEmail(request.getParameter("email"));
 		
 		response.setContentType("text/html");
 		

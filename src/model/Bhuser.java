@@ -16,7 +16,7 @@ public class Bhuser implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="BHUSER_BHUSERID_GENERATOR", sequenceName="BHUSER_SEQ", allocationSize=1)
+	@SequenceGenerator(name="BHUSER_BHUSERID_GENERATOR", sequenceName="BHUSER_SEQ")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="BHUSER_BHUSERID_GENERATOR")
 	private long bhuserid;
 
@@ -34,6 +34,23 @@ public class Bhuser implements Serializable {
 	//bi-directional many-to-one association to Bhpost
 	@OneToMany(mappedBy="bhuser")
 	private List<Bhpost> bhposts;
+
+	//bi-directional many-to-many association to Bhuser
+	@ManyToMany
+	@JoinTable(
+		name="BHFOLLOW"
+		, joinColumns={
+			@JoinColumn(name="FOLLOWER")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="FOLLOWING")
+			}
+		)
+	private List<Bhuser> bhusers1;
+
+	//bi-directional many-to-many association to Bhuser
+	@ManyToMany(mappedBy="bhusers1")
+	private List<Bhuser> bhusers2;
 
 	public Bhuser() {
 	}
@@ -106,6 +123,22 @@ public class Bhuser implements Serializable {
 		bhpost.setBhuser(null);
 
 		return bhpost;
+	}
+
+	public List<Bhuser> getBhusers1() {
+		return this.bhusers1;
+	}
+
+	public void setBhusers1(List<Bhuser> bhusers1) {
+		this.bhusers1 = bhusers1;
+	}
+
+	public List<Bhuser> getBhusers2() {
+		return this.bhusers2;
+	}
+
+	public void setBhusers2(List<Bhuser> bhusers2) {
+		this.bhusers2 = bhusers2;
 	}
 
 }
